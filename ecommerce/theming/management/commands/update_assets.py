@@ -8,6 +8,7 @@ import sass
 from django.conf import settings
 from django.core.management import BaseCommand, CommandError, call_command
 from path import Path
+from os import makedirs
 
 from ecommerce.theming.helpers import get_theme_base_dirs, get_themes, is_comprehensive_theming_enabled
 
@@ -247,7 +248,7 @@ def compile_sass(sass_source_dir, css_destination_dir, lookup_paths, **kwargs):
         raise ValueError("Sass dir '{dir}' must be a valid directory.".format(dir=sass_source_dir))
     if not css_destination_dir.isdir():
         # If css destination directory does not exist, then create one
-        css_destination_dir.mkdir_p()
+        makedirs(css_destination_dir)
 
     sass.compile(
         dirname=(sass_source_dir, css_destination_dir),
