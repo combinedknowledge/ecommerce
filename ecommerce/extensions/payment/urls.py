@@ -2,7 +2,7 @@
 
 from django.conf.urls import include, url
 
-from ecommerce.extensions.payment.views import PaymentFailedView, SDNFailure, cybersource, paypal, stripe
+from ecommerce.extensions.payment.views import PaymentFailedView, SDNFailure, cybersource, paypal, stripe, opayo
 
 CYBERSOURCE_APPLE_PAY_URLS = [
     url(r'^authorize/$', cybersource.CybersourceApplePayAuthorizationView.as_view(), name='authorize'),
@@ -29,10 +29,16 @@ STRIPE_URLS = [
     url(r'^submit/$', stripe.StripeSubmitView.as_view(), name='submit'),
 ]
 
+OPAYO_URLS = [
+    url(r'^transaction_registration/$', opayo.TransactionRegistrationView.as_view(), name='transaction_registration'),
+    url(r'^execute/$', opayo.OpayoPaymentExecutionView.as_view(), name='execute'),
+]
+
 urlpatterns = [
     url(r'^cybersource/', include((CYBERSOURCE_URLS, 'cybersource'))),
     url(r'^error/$', PaymentFailedView.as_view(), name='payment_error'),
     url(r'^paypal/', include((PAYPAL_URLS, 'paypal'))),
     url(r'^sdn/', include((SDN_URLS, 'sdn'))),
     url(r'^stripe/', include((STRIPE_URLS, 'stripe'))),
+    url(r'^opayo/', include((OPAYO_URLS, 'opayo'))),
 ]

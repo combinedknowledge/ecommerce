@@ -1,0 +1,26 @@
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+<div class="popup-opayo-extra-info">
+    <div class="popup-opayo-content">
+        <form id="opayo-payment-form" class="payment-form form-horizontal" method="post" aria-live="polite">
+            {% csrf_token %}
+            <div class="form-input-elements placeholder">
+                <div role="region" aria-labelledby="card-holder-information-region">
+                    <h2 class="title">{% trans "Information" as tmsg %}{{ tmsg | force_escape }}</h2>
+                    <div class="error-message"></div>
+                    {% crispy opayo_payment_form %}
+                </div>
+            </div>
+        </form>
+        <div class="payment-button">
+            <button id="opayo-cancel-button" type="button" class="btn btn-primary btn-large">
+                {% trans "Cancel" as tmsg %}{{ tmsg | force_escape }}
+            </button>
+            <button id="opayo-payment-button" type="submit" class="btn btn-primary btn-large col-sm-6 col-xs-6">
+                <i class="fa fa-spinner fa-spin hidden" aria-hidden="true"></i>
+                {% trans "Add" as tmsg %}{{ tmsg | force_escape }}
+            </button>
+        </div>
+    </div>
+</div>

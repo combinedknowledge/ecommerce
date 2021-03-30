@@ -153,6 +153,7 @@
                     </a>
                 {% else %}
                     {% for processor in payment_processors %}
+                        {% if processor.NAME == 'cybersource' %}
                         <button data-track-type="click"
                                 data-track-event="edx.bi.ecommerce.basket.payment_selected"
                                 data-track-category="checkout"
@@ -160,13 +161,29 @@
                                 data-track-checkout-type="hosted"
                                 class="btn payment-button"
                                 id="{{ processor.NAME|lower }}">
-                            {% if processor.NAME == 'cybersource' %}
                                 {% trans "Checkout" as tmsg %}{{ tmsg | force_escape }}
-                            {% elif processor.NAME == 'paypal' %}
+                        </button>
+                        {% elif processor.NAME == 'paypal' %}
+                        <button data-track-type="click"
+                                data-track-event="edx.bi.ecommerce.basket.payment_selected"
+                                data-track-category="checkout"
+                                data-processor-name="{{ processor.NAME|lower }}"
+                                data-track-checkout-type="hosted"
+                                class="btn payment-button"
+                                id="{{ processor.NAME|lower }}">
                                 {# Translators: Do NOT translate the name PayPal. #}
                                 {% trans "Checkout with PayPal" as tmsg %}{{ tmsg | force_escape }}
-                            {% endif %}
                         </button>
+                        {% elif processor.NAME == 'opayo' %}
+                        <button data-track-type="click"
+                                data-track-event="edx.bi.ecommerce.basket.payment_selected"
+                                data-track-category="checkout"
+                                data-track-checkout-type="hosted"
+                                class="btn payment-button"
+                                id="{{ processor.NAME|lower }}">
+                                {% trans "Checkout with Opayo" as tmsg %}{{ tmsg | force_escape }}
+                        </button>
+                        {% endif %}
                     {% endfor %}
                 {% endif %}
             </div>

@@ -29,6 +29,17 @@
   <script>
     window.paymentErrorPath = "{% url 'payment_error' %}";
   </script>
+
+  <script>
+    require(['jquery', 'payment_processors/opayo'], function($, OpayoProcessor) {
+      'use strict';
+      $(document).ready(function() {
+        OpayoProcessor.init({
+          'transactionRegistrationUrl': "{% url 'opayo:transaction_registration' %}",
+        });
+      });
+    });
+  </script>
 {% endblock %}
 
 {% block skip_link %}
